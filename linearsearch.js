@@ -1,5 +1,4 @@
 function linearSearch(arr, val){
-  // add whatever parameters you deem necessary - good luck!
   for(var i = 0; i < arr.length; i++) {
       if(arr[i] == val) return i;
   }
