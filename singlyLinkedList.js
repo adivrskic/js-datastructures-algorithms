@@ -86,9 +86,64 @@ class SinglyLinkedList {
   set(val, idx) {
     let node = this.get(idx);
     if (node === null) return false;
-    
-    node.val = val;
+    if (node) {
+      console.log(node);
+      node.val = val;
+      return true;
+    }
+  }
+
+  insert(val, idx) {
+    if(idx < 0 || idx > this.length) return false;
+    if(idx === this.length) return !!this.push(val);
+    if(idx === 0) return !!this.unshift(val);
+
+    let newNode = new Node(val);
+    let prev = this.get(idx - 1);
+    let temp = prev.next
+    prev.next = newNode;
+    newNode.next = temp;
+    this.length++;
     return true;
+  }
+
+  remove(idx) {
+    if(idx < 0 || idx >= this.length) return null;
+    if(idx === 0) return this.shift();
+    if(idx === this.length - 1) return this.pop();
+
+    let prev = this.get(idx - 1);
+    let removed = prev.next;
+    prev.next = removed.next;
+    this.length--;
+    return removed;
+  }
+
+  reverse() {
+    let node = this.head;
+    this.head = this.tail;
+    this.tail = node;
+
+    let prev = null;
+    let next;
+
+    for(let i = 0; i < this.length; i++) {
+      next = node.next;
+      node.next = prev;
+      prev = node;
+      node = next;
+    }
+    return this;
+  }
+
+  print() {
+    let arr = [];
+    let current = this.head;
+    while(current) {
+      arr.push(current.val);
+      current = current.next;
+    }
+    console.log(arr);
   }
 }
 
