@@ -74,8 +74,7 @@ class DoublyLinkedList {
 
   get(idx) {
     if(idx < 0 || idx >= this.length) return null;
-    let node;
-    let counter;
+    let node, counter;
     if(idx <= this.length / 2) {
       counter = 0;
       node = this.head;
@@ -93,6 +92,65 @@ class DoublyLinkedList {
     }
 
     return node;
+  }
+
+  set(idx, val) {
+    let node = this.get(idx);
+    if(!node) return false
+    node.val = val;
+    return true;
+  }
+
+  insert(idx, val) {
+    if(idx < 0 || idx > this.length) return false;
+    if(idx === 0) return !!this.unshift(val);
+    if(idx === this.length) return !!this.push(val);
+
+    let newNode = new Node(val);
+    let prevNode = this.get(idx - 1);
+    let nextNode = prevNode.next;
+
+    prevNode.next = newNode;
+    newNode.prev = prevNode;
+    newNode.next = nextNode;
+    nextNode.prev = newNode;
+    
+    this.length++;
+    return true;
+  }
+
+  remove(idx) {
+    if(idx < 0 || idx >= this.length) return undefined;
+    if(idx === 0) return this.shift();
+    if(idx === this.length - 1) return this.pop();
+
+    let removedNode = this.get(idx);
+    removedNode.prev.next = removedNode.next;
+    removedNode.next.prev = removedNode.prev;
+
+    removedNode.prev = null;
+    removedNode.next = null;
+
+    this.length--;
+    return removedNode;
+  }
+
+  reverse() {
+    if(this.length === 0) return false;
+    let node = this.head;
+    this.head = this.tail;
+    this.tail = node;
+
+    let prev = null;
+    let next;
+
+    for(let i = 0; i < this.length; i++) {
+      next = node.next;
+      node.next = prev;
+      prev = node;
+      node = next;
+    }
+    return this;
   }
 }
 
