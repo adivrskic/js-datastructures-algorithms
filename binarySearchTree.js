@@ -42,7 +42,6 @@ class BinarySearchTree {
   }
 
   find(val) {
-    console.log(val, this.root.val)
     if(!this.root) return false;
     if(this.root && val === this.root.val) return this.root;
 
