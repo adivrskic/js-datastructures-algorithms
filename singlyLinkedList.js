@@ -135,6 +135,28 @@ class SinglyLinkedList {
     }
     return this;
   }
+  
+  rotate(num) {
+    let rotation;
+    if(num < 0) {
+      rotation = this.length - (this.length % num) - 1;
+    } else {
+      rotation = num % this.length;
+    }
+
+    if(rotation === 0) return this;
+
+    let newHead = this.get(rotation);
+    let newTail = this.get(rotation - 1);
+    let connect = this.get(0);
+
+    this.tail.next = connect;
+    this.head = newHead;
+    this.tail = newTail;
+    newTail.next = null;
+
+    return this;
+  }
 
   print() {
     let arr = [];
